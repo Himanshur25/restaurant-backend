@@ -16,7 +16,14 @@ const con = mysql.createConnection({
     port:process.env.Port
 
   });
-  
+  console.log(' :>> ', {
+    host:process.env.Host,
+    database:process.env.Database,
+    user:process.env.User,
+    password:process.env.Password,
+    port:process.env.Port
+
+  });
   con.connect((err)=> {
     if (err) throw err;
     console.log("Connected!");
@@ -54,13 +61,15 @@ app.get('/api/user',(req,res)=>{
 // })
 app.post("/api/register",(req,res)=>{
     
-
+    console.log(req);
     const fullname=req.body.fullname
     const email=req.body.email
     const password=req.body.password
-    //console.log(fullname+" "+email+" "+password)
-    con.query("insert into user(fullname,email,password) values(?,?,?)",[fullname,email,password],(err,result)=>{
+    console.log("data" +fullname+" "+email+" "+password);
+    con.query("insert into user(fullname,email,pass) values(?,?,?)",[fullname,email,password],(err,result)=>{
         if(err){
+            // console.log('err :>> ', err)
+
             return res.status(500).json({
                 error:"Internal server error"
             })
@@ -103,23 +112,23 @@ app.post("/api/login",(req,res)=>{
         })
     
     })
-    app.post('/api/Food',(req,res)=>{
-        const food_id=req.body.food_id
-        const food_name=req.body.food_name
-        const food_price=req.body.food_price
-        con.query("insert into Food(food_id,food_name,food_price) values(?,?,?)",[food_id,food_name,food_price],(err,result)=>{
-            if(err){
-                return res.status(500).json({
-                    error:"Internal server error"
-                })
-            }
-            if(!food_id || !food_name || !food_price){
-                return res.status(400).json({
-                    error:"fill the credential properly"
-                })
-            }
-            return res.status(201).json({
-                message:"Item Added successfully"
-            })
-        })
-    })
+    // app.post('/api/Food',(req,res)=>{
+    //     const food_id=req.body.food_id
+    //     const food_name=req.body.food_name
+    //     const food_price=req.body.food_price
+    //     con.query("insert into Food(food_id,food_name,food_price) values(?,?,?)",[food_id,food_name,food_price],(err,result)=>{
+    //         if(err){
+    //             return res.status(500).json({
+    //                 error:"Internal server error"
+    //             })
+    //         }
+    //         if(!food_id || !food_name || !food_price){
+    //             return res.status(400).json({
+    //                 error:"fill the credential properly"
+    //             })
+    //         }
+    //         return res.status(201).json({
+    //             message:"Item Added successfully"
+    //         })
+    //     })
+    // })
