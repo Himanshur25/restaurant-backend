@@ -62,7 +62,7 @@ app.post("/api/register",(req,res)=>{
     const email=req.body.email
     const password=req.body.password
     console.log(fullname+" "+email+" "+password);
-    con.query("insert into user(fullname,email,pass) values(?,?,?)",[fullname,email,password],(err,result)=>{
+    con.query("insert into user(fullname,email,password) values(?,?,?)",[fullname,email,password],(err,result)=>{
         if(err){
 
             return res.status(500).json({
