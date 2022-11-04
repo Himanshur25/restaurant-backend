@@ -54,21 +54,16 @@ app.get('/api/user',(req,res)=>{
     })
 
 })
-// app.get('/api/user/:id',(req,res)=>{
-//     const userr=user.find(c=>c.id===parseInt(req.params.id));
-//     if(!userr)res.status(404).send("Error")
-//     res.send(userr);
-// })
+
 app.post("/api/register",(req,res)=>{
     
     console.log(req);
     const fullname=req.body.fullname
     const email=req.body.email
     const password=req.body.password
-    console.log("data" +fullname+" "+email+" "+password);
+    console.log(fullname+" "+email+" "+password);
     con.query("insert into user(fullname,email,pass) values(?,?,?)",[fullname,email,password],(err,result)=>{
         if(err){
-            // console.log('err :>> ', err)
 
             return res.status(500).json({
                 error:"Internal server error"
