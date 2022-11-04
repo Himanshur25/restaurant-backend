@@ -66,7 +66,8 @@ app.post("/api/register",(req,res)=>{
         if(err){
 
             return res.status(500).json({
-                error:"Internal server error"
+                error:"Internal server error",
+                message:"hello"
             })
         }
         if(!fullname || !email || !password){
