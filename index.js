@@ -4,8 +4,6 @@ const dotenv=require('dotenv')
 dotenv.config()
 const mysql=require('mysql')
 const cors=require('cors')
-const path =require('path')
-const jwt=require('jsonwebtoken')
 
 
 app.use(express.json())
@@ -58,10 +56,6 @@ app.post("/api/register",(req,res)=>{
     const fullname=req.body.fullname
     const email=req.body.email
     const password=req.body.password
-    //console.log(fullname+" "+email+" "+password)
-    const user={name:fullname}
-    const accessToken=jwt.sign(user,process.env.ACCESS_TOKEN)
-    res.json({accessToken:accessToken})
     con.query("insert into user(fullname,email,password) values(?,?,?)",[fullname,email,password],(err,result)=>{
         if(err){
             return res.status(500).json({
@@ -78,17 +72,6 @@ app.post("/api/register",(req,res)=>{
         })
     })
 })
-function authenticateuser(req,res,next)
-{
-    const authHeader=req.headers("authorization")
-    const token=authHeader && authHeader.split('')[1]
-    if(token==NULL) return res.sendstatus(401)
-    jwt.verify(token,process.env.ACCESS_TOKEN,(err,user)=>{
-        if(err) return res.sendstatus(403)
-        req.user=user
-        next()
-    })
-}
 
 
 app.post("/api/login",(req,res)=>{
